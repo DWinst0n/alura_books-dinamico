@@ -106,7 +106,7 @@ body {
   line-height: 24px;
 }
 
-.livro__descricao {
+.livro__autor {
   text-align: center;
   font-size: 18px;
   color: var(--text-author-color);
