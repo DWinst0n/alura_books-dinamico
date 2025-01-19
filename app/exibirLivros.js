@@ -1,6 +1,5 @@
-const livrosContainer = document.getElementById("livros");
+export const livrosContainer = document.getElementById("livros");
 export function exibirLivros(listaLivros) {
-    console.log(listaLivros);
     listaLivros.forEach(livro => {
         livrosContainer.innerHTML += `<div class="livro">
         <img class="livro__imagens" src="${livro.imagem}" alt="${livro.alt}" />
