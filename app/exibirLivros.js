@@ -12,3 +12,22 @@ export function exibirLivros(listaLivros) {
       </div>`
     });
 }
+
+export function botaoRedefinirLivros (listaOriginal) {
+  if(document.querySelector(".botao__redefinir") === null) {
+    const listaBotoes = document.querySelector(".nav");
+    const itemBotao = document.createElement("li");
+    const botaoRedefinir = document.createElement("button");
+    botaoRedefinir.textContent = "TODOS OS LIVROS"
+    botaoRedefinir.classList.add("btn");
+    botaoRedefinir.classList.add("botao__redefinir")
+    itemBotao.appendChild(botaoRedefinir);
+    listaBotoes.appendChild(itemBotao);
+
+    botaoRedefinir.addEventListener("click", () => {
+        livrosContainer.innerHTML = "";
+        exibirLivros(listaOriginal);
+        botaoRedefinir.remove();
+    });
+}
+}
