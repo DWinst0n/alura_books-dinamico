@@ -1,8 +1,8 @@
-import { exibirLivros, livrosContainer, botaoRedefinirLivros } from "./exibirLivros.js";
+import { exibirLivros, botaoRedefinirLivros } from "./exibirLivros.js";
 import { fazerDesconto } from "./aplicarDesconto.js";
-import { filtrarPorTag } from "./filtrosLivros.js"
+import { filtrarPorTag, ordenarPorPreço, exibirLivrosDisponíveis } from "./filtrosLivros.js"
 
-let livros = [];
+let livros;
 
 const endpointDaAPI = "https://guilhermeonrails.github.io/casadocodigo/livros.json";
 
@@ -13,16 +13,28 @@ async function controleLivrosDaAPI() {
 
     let livrosComDesconto = fazerDesconto(livros);
     exibirLivros(livrosComDesconto);
+
+    //botões
     const botoesID = ["btnFiltrarLivrosFront", "btnFiltrarLivrosBack", "btnFiltrarLivrosDados"];
     botoesID.forEach(botao => {
         const botaoFiltrarTag = document.getElementById(botao);
         botaoFiltrarTag.addEventListener("click", () => {
-            livrosContainer.innerHTML = "";
             const filtro = filtrarPorTag(botaoFiltrarTag.value, livros);
             exibirLivros(filtro);
             botaoRedefinirLivros(livrosComDesconto);
         });
     })
-    
+    const botaoOrdenarPorPreço = document.getElementById("btnOrdenarPorPreco");
+    botaoOrdenarPorPreço.addEventListener("click", () => {
+        const ordenados = ordenarPorPreço(livrosComDesconto);
+        exibirLivros(ordenados);
+        botaoRedefinirLivros(livrosComDesconto);
+    });
+    const botaoMostrarDisponíveis = document.getElementById("btnLivrosDisponiveis");
+    botaoMostrarDisponíveis.addEventListener("click", () => {
+        const disponíveis = exibirLivrosDisponíveis(livrosComDesconto);
+        exibirLivros(disponíveis);
+        botaoRedefinirLivros(livrosComDesconto);
+    })
 }
 controleLivrosDaAPI();
