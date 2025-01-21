@@ -11,8 +11,15 @@ async function controleLivrosDaAPI() {
     livros = await res.json();
     console.table(livros);
 
-    let livrosComDesconto = fazerDesconto(livros);
-    exibirLivros(livrosComDesconto);
+    //controle de livros exibidos e se o desconto é aplicado
+    const desconto = true;
+    let livrosExibidos = livros;
+
+    if (desconto){ 
+    const livrosComDesconto = fazerDesconto(livros);
+    livrosExibidos = livrosComDesconto;
+    }
+    exibirLivros(livrosExibidos);
 
     //botões
     const botoesID = ["btnFiltrarLivrosFront", "btnFiltrarLivrosBack", "btnFiltrarLivrosDados"];
@@ -21,20 +28,20 @@ async function controleLivrosDaAPI() {
         botaoFiltrarTag.addEventListener("click", () => {
             const filtro = filtrarPorTag(botaoFiltrarTag.value, livros);
             exibirLivros(filtro);
-            botaoRedefinirLivros(livrosComDesconto);
+            botaoRedefinirLivros(livrosExibidos);
         });
     })
     const botaoOrdenarPorPreço = document.getElementById("btnOrdenarPorPreco");
     botaoOrdenarPorPreço.addEventListener("click", () => {
-        const ordenados = ordenarPorPreço(livrosComDesconto);
+        const ordenados = ordenarPorPreço(livrosExibidos);
         exibirLivros(ordenados);
-        botaoRedefinirLivros(livrosComDesconto);
+        botaoRedefinirLivros(livrosExibidos);
     });
     const botaoMostrarDisponíveis = document.getElementById("btnLivrosDisponiveis");
     botaoMostrarDisponíveis.addEventListener("click", () => {
-        const disponíveis = exibirLivrosDisponíveis(livrosComDesconto);
+        const disponíveis = exibirLivrosDisponíveis(livrosExibidos);
         exibirLivros(disponíveis);
-        botaoRedefinirLivros(livrosComDesconto);
+        botaoRedefinirLivros(livrosExibidos);
     })
 }
 controleLivrosDaAPI();
